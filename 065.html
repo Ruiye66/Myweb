@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>滑动门</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ff5f5f'/><rect x='6' y='9' width='8' height='14' fill='%23fff'/><rect x='18' y='9' width='8' height='14' fill='%23fff' opacity='.7'/></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;list-style:none;text-decoration:none;font-family:"微软雅黑","Microsoft YaHei",sans-serif;}
+body{background:#f7f4f2;padding:54px 0 0 130px;}
+
+/* 一级：竖向排列 */
+.nav{width:max-content;}
+.item{display:flex;align-items:center;width:max-content;margin-bottom:2px;}
+.title{flex:0 0 140px;width:140px;height:56px;line-height:56px;text-align:center;
+       background:#ff5f5f;color:#fff;font-size:17px;cursor:pointer;transition:background .3s;}
+.item:hover .title{background:#bb1313;}
+
+/* 二级：横向展开的门 */
+.door{display:flex;height:56px;width:0;overflow:hidden;transition:width .35s ease;}
+.item:hover .door{width:282px;}
+.door a{flex:0 0 94px;width:94px;height:56px;line-height:56px;text-align:center;white-space:nowrap;
+        background:#fff;color:#333;font-size:15px;border-right:1px solid #eee;transition:background .2s,color .2s;}
+.door a:hover{background:#ffe3e3;color:#bb1313;}
+
+/* 演示提示 */
+.tip{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);
+     background:#333;color:#fff;font-size:14px;padding:10px 18px;border-radius:4px;
+     opacity:0;transition:opacity .25s;pointer-events:none;}
+.tip.on{opacity:1;}
+
+@media (max-width:600px){
+  body{padding:30px 0 0 30px;}
+  .title{flex-basis:110px;width:110px;font-size:15px;}
+  .door{width:234px;}
+  .door a{flex-basis:78px;width:78px;font-size:13px;}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="item">
+    <a href="#" class="title">学校概况</a>
+    <div class="door">
+      <a href="#">学校简介</a>
+      <a href="#">历史沿革</a>
+      <a href="#">校园风光</a>
+    </div>
+  </div>
+
+  <div class="item">
+    <a href="#" class="title">机构设置</a>
+    <div class="door">
+      <a href="#">教学科研机构</a>
+      <a href="#">职能部门</a>
+      <a href="#">直属单位</a>
+    </div>
+  </div>
+
+  <div class="item">
+    <a href="#" class="title">教育教学</a>
+    <div class="door">
+      <a href="#">本科教育</a>
+      <a href="#">研究生教育</a>
+      <a href="#">继续教育</a>
+    </div>
+  </div>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script>
+var tip = document.getElementById('tip'), timer;
+document.querySelectorAll('.door a, .title').forEach(function(a){
+  a.onclick = function(e){
+    e.preventDefault();
+    tip.textContent = '演示入口：' + a.textContent;
+    tip.classList.add('on');
+    clearTimeout(timer);
+    timer = setTimeout(function(){ tip.classList.remove('on'); }, 1500);
+  };
+});
+</script>
+</body>
+</html>
